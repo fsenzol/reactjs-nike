@@ -65,7 +65,7 @@ export const Hero = () => {
 
 			</div>
 
-			<div className="relative flex-1 justify-center items-center flex xl:min-h-screen max-xl:py-40 bg-cover bg-center" ref={backgroundRef} style={{backgroundColor: `rgb(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]})`}}>
+			<div className="relative flex-1 justify-center items-center flex xl:min-h-screen max-xl:py-40 bg-cover bg-center bg-blend-multiply bg-hero" ref={backgroundRef} style={{backgroundColor: `rgb(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]})`}}>
 				<img src={bigShoeImg} ref={bigShoeRef} alt="shoe" width={610} height={500} className="object-contain relative z-10" />
 				<div className="flex sm:gap-6 gap-4 absolute -bottom-[5%] sm:left-[10%] max-sm:px-6">
 

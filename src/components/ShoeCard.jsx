@@ -48,7 +48,7 @@ const ShoeCard = ({img, changeBigShoe, bigShoe}) => {
 	<div className={`border-2 rounded-xl ${bigShoe === img ? "border-coral-red" : "border-transparent"} pointer-cursor`}
 	 onClick={handleClick} onMouseEnter={handleHover} onMouseLeave={handleHoverOut}>
 
-		<div className="flex justify-center items-center object-contain bg-center bg-cover sm:h-40 sm:w-40 rounded-xl max-sm p-4" style={{backgroundColor: `rgb(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]})`}}>
+		<div className="flex justify-center items-center object-contain bg-center bg-cover sm:h-40 sm:w-40 rounded-xl max-sm p-4 bg-card bg-blend-multiply" style={{backgroundColor: `rgb(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]})`}}>
 			<img src={img} 
 			ref={shoeRef}
 			alt="shoe collection"
