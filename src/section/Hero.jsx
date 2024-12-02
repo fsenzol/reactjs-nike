@@ -1,19 +1,47 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { arrowRight } from "../assets/icons"
 import { bigShoe1 } from "../assets/images"
 import { Button } from "../components/Button"
 import ShoeCard from "../components/ShoeCard"
 import { shoes, statistics } from "../constants"
+import gsap from "gsap"
+import ColorThief from "colorthief";
+
+
 
 export const Hero = () => {
 
 	const [bigShoeImg, setBigShoeImg] = useState(bigShoe1)
+	const [bgColor, setBgColor] = useState([255, 255, 255])
+
+	const bigShoeRef = useRef()
+	const backgroundRef = useRef()
+
+	const handleBigShoeChange = (shoe) => {
+
+		gsap.from(bigShoeRef.current, {
+			x: -999,
+			ease: "power4.out"
+		})
+		setBigShoeImg(shoe)
+	}
+
+	useEffect(() => {
+		if (bigShoeRef.current) {
+			bigShoeRef.current.onload = () => {
+				const cThief = new ColorThief();
+				const res = cThief.getColor(bigShoeRef.current, 100)
+				setBgColor(res)
+			}
+		}
+	})
+
 
 	return (
 		<section id="home" className="w-full p-2 flex xl:flex-row flex-col justify-center min-h-screen gap-10 max-container">
 
 			<div className="relative xl:w-2/5 flex flex-col justify-center items-start w-full max-xl:padding-x padding-t">
-				<p className="font-montserrat text-xl text-coral-red">Our Summer Collections</p>
+				<p className="font-montserrat text-xl text-coral-red mt-5">Our Summer Collections</p>
 
 				<h1 className="mt-10 font-palanquin text-8xl max-sm:text-[72px] ">
 					<span className="xl:bg-white xl:whitespace-nowrap relative z-10 pr-10" >The New Arrival</span>
@@ -37,14 +65,13 @@ export const Hero = () => {
 
 			</div>
 
-			<div className="relative flex-1 justify-center items-center flex xl:min-h-screen max-xl:py-40 bg-primary bg-hero bg-cover bg-center">
-				<img src={bigShoeImg} alt="shoe" width={610} height={500} className="object-contain relative z-10" />
-
+			<div className="relative flex-1 justify-center items-center flex xl:min-h-screen max-xl:py-40 bg-cover bg-center" ref={backgroundRef} style={{backgroundColor: `rgb(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]})`}}>
+				<img src={bigShoeImg} ref={bigShoeRef} alt="shoe" width={610} height={500} className="object-contain relative z-10" />
 				<div className="flex sm:gap-6 gap-4 absolute -bottom-[5%] sm:left-[10%] max-sm:px-6">
 
 					{shoes.map(({ bigShoe, thumbnail }, i) => (
 						<div key={i}>
-							<ShoeCard img={thumbnail} changeBigShoe={(shoe) => (setBigShoeImg(shoe))} bigShoe={bigShoeImg}/>
+							<ShoeCard img={thumbnail} changeBigShoe={(shoe) => handleBigShoeChange(shoe)} bigShoe={bigShoeImg} bgColor={bgColor}/>
 						</div>
 					))}
 

@@ -2,6 +2,7 @@ import { useRef } from "react"
 import { star } from "../assets/icons"
 import gsap from "gsap"
 
+
 const PopularProductCard = ({ key, imgURL, name, price }) => {
 
 	const shoeRef = useRef()

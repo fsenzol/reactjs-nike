@@ -1,5 +1,6 @@
 import gsap from "gsap"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
+import ColorThief from "colorthief";
 
 const ShoeCard = ({img, changeBigShoe, bigShoe}) => {
 	const handleClick = () => {
@@ -7,6 +8,8 @@ const ShoeCard = ({img, changeBigShoe, bigShoe}) => {
 			changeBigShoe(img)
 		}
 	}
+
+	const [bgColor, setBgColor] = useState([255, 255, 255])
 
 	const shoeRef = useRef()
 
@@ -30,12 +33,22 @@ const ShoeCard = ({img, changeBigShoe, bigShoe}) => {
 		})
 	}
 
+	useEffect(() => {
+		if (shoeRef.current) {
+			shoeRef.current.onload = () => {
+				const cThief = new ColorThief();
+				const res = cThief.getColor(shoeRef.current, 100)
+				setBgColor(res)
+			}
+		}
+	})
+
 
   return (
 	<div className={`border-2 rounded-xl ${bigShoe === img ? "border-coral-red" : "border-transparent"} pointer-cursor`}
 	 onClick={handleClick} onMouseEnter={handleHover} onMouseLeave={handleHoverOut}>
 
-		<div className="flex justify-center items-center object-contain bg-center bg-cover bg-card sm:h-40 sm:w-40 rounded-xl max-sm p-4">
+		<div className="flex justify-center items-center object-contain bg-center bg-cover sm:h-40 sm:w-40 rounded-xl max-sm p-4" style={{backgroundColor: `rgb(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]})`}}>
 			<img src={img} 
 			ref={shoeRef}
 			alt="shoe collection"
